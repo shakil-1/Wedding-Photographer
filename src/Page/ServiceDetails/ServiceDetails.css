@@ -1,0 +1,23 @@
+.card-update{
+    width: 50%;
+}
+
+
+@media screen and (max-width:576px){
+    .card-update{
+       width: 95%;
+    }
+
+}
+@media screen and (min-width: 577px) and (max-width: 768px){
+    .card-update{
+        width: 70% ;
+    }
+
+}
+@media screen and (min-width: 769px) and (max-width: 992px){
+    .card-update{
+        width: 80% ;
+    }
+
+}
