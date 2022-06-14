@@ -6,6 +6,7 @@ import Header from './Page/Header/Header';
 import Home from './Page/Home/Home/Home';
 import Login from './Page/Home/Login/Login';
 import Register from './Page/Home/Register/Register';
+import Loading from './Page/Loading/Loading';
 import NotFound from './Page/NotFound/NotFound';
 import Service from './Page/Service/Service';
 import ServiceDetails from './Page/ServiceDetails/ServiceDetails';
@@ -20,6 +21,7 @@ function App() {
         <Route path='/home' element={<Home></Home>}></Route>
         <Route path='/home/:id' element={<ServiceDetails></ServiceDetails>}></Route>
         <Route path='/about' element={<About></About>}></Route>
+        <Route path='/loading' element={<Loading></Loading>}></Route>
         <Route path='/service' element={<Service></Service>}></Route>
         <Route path='/services' element={<Services></Services>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>

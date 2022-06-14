@@ -3,7 +3,9 @@ import { Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../Firebase.init';
 import SocilLogin from '../../SocilLogin/SocilLogin';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
+import Loading from '../../Loading/Loading';
+import { async } from '@firebase/util';
 
 const Register = () => {
     const [
@@ -11,49 +13,46 @@ const Register = () => {
         user,
         loading,
         error,
-      ] = useCreateUserWithEmailAndPassword(auth);
-      const navigate = useNavigate();
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [sendEmailVerification, sending, error1] = useSendEmailVerification(auth);
+    const navigate = useNavigate();
+    if (user) {
+        console.log('user', user);
+    }
+    if (loading) {
+        return <Loading></Loading>
+    }
 
-      if (error) {
-        return (
-          <div>
-            <p>Error: {error.message}</p>
-          </div>
-        );
-      }
-      if (loading) {
-        return <p>Loading...</p>;
-      }
-      if(user){
-          navigate('/home')
-      }
-
-    const handelregister = event => {
+    const handelSubmitRegister = async (event) => {
         event.preventDefault();
         const name = event.target.name.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
         console.log(name, email, password);
+       
 
-        createUserWithEmailAndPassword(email, password);
+        await createUserWithEmailAndPassword(email, password);
+        await sendEmailVerification();
+        alert('Sent email');
+        navigate('/home')
     }
     return (
         <div className='bg-lgoin  d-xl-flex justify-content-center align-items-center'>
             <div className='w-100 '>
                 <section className='login-contaienr w-xl-25 w-sm-100 w-md-50 mx-auto   p-5 shadow-sm  bg-white rounded '>
                     <h2 className='text-center'>Please Register</h2>
-                    <Form onSubmit={handelregister} >
+                    <Form onSubmit={handelSubmitRegister} >
                         <Form.Group className="mb-3" controlId="formBasicName">
-                            <Form.Control type="text"  name="name" placeholder="Enter your name" />
+                            <Form.Control type="text" name="name" placeholder="Enter your name" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Control type="email"  name="email" placeholder="Enter email" />
+                            <Form.Control type="email" name="email" placeholder="Enter email" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Control type="password"  name="password" placeholder="Password" />
+                            <Form.Control type="password" name="password" placeholder="Password" />
                         </Form.Group>
 
-                        <Button className='mx-auto w-100  shadow-sm my-3' variant="primary" type="submit">REGISTER</Button>
+                        <Button onClick={() => createUserWithEmailAndPassword(auth)} className='mx-auto w-100  shadow-sm my-3' variant="primary" type="submit">REGISTER</Button>
                         <Link className='text-decoration-none ' to="/login">Already have an account
                         </Link>
                     </Form>

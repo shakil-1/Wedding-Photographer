@@ -3,20 +3,25 @@ import google from '../../img/google.png';
 import github from '../../img/github.png';
 import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../Firebase.init';
+import { useNavigate } from 'react-router-dom';
 
 const SocilLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
+    const navigate = useNavigate();
 
-    if (error) {
+    if (error || error1) {
         return (
             <div>
-                <p>Error: {error.message}</p>
+                <p>Error: {error.message} {error1.message}</p>
             </div>
         );
     }
-    if (loading) {
+    if (loading || loading1) {
         return <p>Loading...</p>;
+    }
+    if (user || user1) {
+        navigate('/home');
     }
 
     return (
