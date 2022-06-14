@@ -1,8 +1,24 @@
 import React from 'react';
 import google from '../../img/google.png';
 import github from '../../img/github.png';
+import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import auth from '../../Firebase.init';
 
 const SocilLogin = () => {
+    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
+
+    if (error) {
+        return (
+            <div>
+                <p>Error: {error.message}</p>
+            </div>
+        );
+    }
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
     return (
         <div>
             <div className='d-flex  '>
@@ -12,8 +28,8 @@ const SocilLogin = () => {
 
             </div>
             <div className='mx-auto w-lg-25 w-sm-100 w-md-50 text-center '>
-                <button className="border-0  rounded-circle shadow-sm p-2  bg-white rounded"><img style={{ height: '30px', width: '30px' }} src={google} alt="" /></button>
-                <button className="border-0 m-2 rounded-circle shadow-sm p-2  bg-white rounded"><img style={{ height: '30px', width: '30px' }} src={github} alt="" /></button>
+                <button onClick={() => signInWithGoogle()} className="border-0  rounded-circle shadow-sm p-2  bg-white rounded"><img style={{ height: '30px', width: '30px' }} src={google} alt="" /></button>
+                <button onClick={() => signInWithGithub()} className="border-0 m-2 rounded-circle shadow-sm p-2  bg-white rounded"><img style={{ height: '30px', width: '30px' }} src={github} alt="" /></button>
             </div>
 
         </div>
