@@ -29,9 +29,9 @@ const Footer = () => {
                         <div className="col-md-4">
                             <h4>Follow us</h4>
                             <ul className="social-icon">
-                                <li><a href="https://www.facebook.com/profile.php?id=100076417335846"><i className="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="https://www.instagram.com/shak.il9650/"><i className="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                <li><a href="https://twitter.com/Shakil5571"><i className="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a target="_blank" href="https://www.facebook.com/profile.php?id=100076417335846"><i className="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a target="_blank" href="https://www.instagram.com/shak.il9650/"><i className="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a target="_blank" href="https://twitter.com/Shakil5571"><i className="fa fa-twitter" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
 

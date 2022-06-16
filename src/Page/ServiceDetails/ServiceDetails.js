@@ -21,12 +21,13 @@ const ServiceDetails = () => {
 
     return (
         <div>
-            <div className="card-group card-update mx-auto">
+            <div className="card-group card-update mx-auto mt-1 mb-2">
                 <div className="card">
                     <img className="card-img-top"  src={service.img} alt="Card image cap" />
                     <div className="card-body">
                         <h5 className="card-title">{service.name}</h5>
-                        <p className="card-text"><span className='fw-bold'>Description</span>: {service.description}</p>
+                        <p className="card-text"><span className='fw-bold'>Short Description</span>: {service.description}</p>
+                        <p className="card-text"><span className='fw-bold'>Full Description</span>: {service.descriptionFull}</p>
                         <p><span className='fw-bold'>Price</span>: ${service.price}</p>
                     </div>
 

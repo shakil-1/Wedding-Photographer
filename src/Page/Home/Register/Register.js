@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../Firebase.init';
-import SocilLogin from '../../SocilLogin/SocilLogin';
-import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
 import Loading from '../../Loading/Loading';
-import { async } from '@firebase/util';
+import SocilLogin from '../../SocilLogin/SocilLogin';
 
 const Register = () => {
+    const navigate = useNavigate();
     const [
         createUserWithEmailAndPassword,
         user,
@@ -15,26 +15,27 @@ const Register = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
     const [sendEmailVerification, sending, error1] = useSendEmailVerification(auth);
-    const navigate = useNavigate();
-    if (user) {
-        console.log('user', user);
+    if (error) {
+        return (
+            <div>
+                <p>Error: {error.message}</p>
+            </div>
+        );
     }
     if (loading) {
         return <Loading></Loading>
     }
 
-    const handelSubmitRegister = async (event) => {
+    const handelSubmitRegister = event => {
         event.preventDefault();
         const name = event.target.name.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
-        console.log(name, email, password);
-       
+        // console.log(name, email, password);
+        createUserWithEmailAndPassword(email, password);
+        navigate('/home');
+        sendEmailVerification();
 
-        await createUserWithEmailAndPassword(email, password);
-        await sendEmailVerification();
-        alert('Sent email');
-        navigate('/home')
     }
     return (
         <div className='bg-lgoin  d-xl-flex justify-content-center align-items-center'>
@@ -51,15 +52,12 @@ const Register = () => {
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Control type="password" name="password" placeholder="Password" />
                         </Form.Group>
-
-                        <Button onClick={() => createUserWithEmailAndPassword(auth)} className='mx-auto w-100  shadow-sm my-3' variant="primary" type="submit">REGISTER</Button>
+                        <Button className='mx-auto w-100  shadow-sm my-3' variant="primary" type="submit">REGISTER</Button>
                         <Link className='text-decoration-none ' to="/login">Already have an account
                         </Link>
                     </Form>
-
                     <SocilLogin></SocilLogin>
-
-
+                   
                 </section>
             </div>
         </div>

@@ -21,7 +21,7 @@ const Services = () => {
     return (
         <div className='container '>
             <h1 className='text-center text-primary bould py-5'>Wedding Photographer Services</h1>
-            <button onClick={handleClick}>change layout</button>
+            <button className='btn btn-link text-decoration-none' onClick={handleClick}>Change layout</button>
             <div className={isTow ? 'card-header2' : 'card-header3'}>
                 {
                     services.slice(0, value).map(service => <Service key={service.id} service={service}></Service>)
@@ -30,7 +30,7 @@ const Services = () => {
 
             </div>
             {
-                !(value >= services.length) && <button onClick={handleSee}>see more</button>
+                !(value >= services.length) && <button className='btn btn-link text-decoration-none mx-auto d-block' onClick={handleSee}>See more</button>
             }
 
         </div>
