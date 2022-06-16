@@ -11,14 +11,14 @@ import auth from '../../Firebase.init';
 
 const Header = () => {
     const [user] = useAuthState(auth);
-    const handelSignOut = ()=>{
+    const handelSignOut = () => {
         signOut(auth);
     }
     return (
         <div>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar collapseOnSelect expand="lg"  bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand className='text-warning font-weight-bold' as={Link} to="/home">Wedding-Photographer</Navbar.Brand>
+                    <Navbar.Brand className=' text-warning font-weight-bold' as={Link} to="/home">Wedding-Photographer</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">

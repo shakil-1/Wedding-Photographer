@@ -13,6 +13,7 @@ import NotFound from './Page/NotFound/NotFound';
 import Service from './Page/Service/Service';
 import ServiceDetails from './Page/ServiceDetails/ServiceDetails';
 import Services from './Page/Services/Services';
+import Shipping from './Page/Shipping/Shipping';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           </RequireAuth>
         }></Route>
         <Route path='/about' element={<About></About>}></Route>
+        <Route path='/shipping/:id' element={<Shipping></Shipping>}></Route>
         <Route path='/loading' element={<Loading></Loading>}></Route>
         <Route path='/service' element={<Service></Service>}></Route>
         <Route path='/services' element={<Services></Services>}></Route>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import './ServiceDetails.css'
 
 
@@ -15,6 +15,7 @@ const ServiceDetails = () => {
 
                 const myData = data.find(single => single.id === parseInt(id))
                 setService(myData);
+               
                 // console.log(myData, 'i am herer ')
             });
     }, [id])
@@ -29,12 +30,16 @@ const ServiceDetails = () => {
                         <p className="card-text"><span className='fw-bold'>Short Description</span>: {service.description}</p>
                         <p className="card-text"><span className='fw-bold'>Full Description</span>: {service.descriptionFull}</p>
                         <p><span className='fw-bold'>Price</span>: ${service.price}</p>
+                       
                     </div>
-
+                    <Link to={'/shipping/' + id}>
+                        <button className='btn btn-primary mx-auto d-block'>Shipping Address</button>
+                    </Link>
                 </div>
             </div>
-            
-           
+         
+
+        
         </div>
     );
 };
