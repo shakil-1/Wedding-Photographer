@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../Firebase.init';
 import Loading from '../../Loading/Loading';
 import SocilLogin from '../../SocilLogin/SocilLogin';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -15,6 +17,10 @@ const Register = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
     const [sendEmailVerification, sending, error1] = useSendEmailVerification(auth);
+    if (user) {
+        console.log(user);
+    }
+
     if (error) {
         return (
             <div>
@@ -26,15 +32,21 @@ const Register = () => {
         return <Loading></Loading>
     }
 
-    const handelSubmitRegister = event => {
+    const handelSubmitRegister = async (event) => {
         event.preventDefault();
         const name = event.target.name.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
-        // console.log(name, email, password);
-        createUserWithEmailAndPassword(email, password);
+
+
+
+        await createUserWithEmailAndPassword(email, password);
+        await sendEmailVerification();
+        toast('Send password reset, please check your email')
         navigate('/home');
-        sendEmailVerification();
+
+
+
 
     }
     return (
@@ -57,7 +69,8 @@ const Register = () => {
                         </Link>
                     </Form>
                     <SocilLogin></SocilLogin>
-                   
+                    <ToastContainer />
+
                 </section>
             </div>
         </div>

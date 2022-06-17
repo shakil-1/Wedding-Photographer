@@ -1,39 +1,42 @@
-import { Button, Form, ToastContainer } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import auth from '../../../Firebase.init';
 import Loading from '../../Loading/Loading';
 import SocilLogin from '../../SocilLogin/SocilLogin';
 import './Login.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRef } from 'react';
 
 const Login = () => {
     const location = useLocation();
     let from = location.state?.from?.pathname || "/";
+    const emailInput = useRef()
     const [
         signInWithEmailAndPassword,
         user,
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
-    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
     const navigate = useNavigate();
     let errorElement;
+    const [sendPasswordResetEmail, sending, error1] = useSendPasswordResetEmail(auth);
     if (user) {
         navigate(from, { replace: true });
     }
 
-    if (error) {
+    if (error || error1) {
         errorElement =
-            <div>
-                <p>Error: {error.message}</p>
-            </div>
+            <p className='text-danger'>Error: {error?.message} {error1?.message}</p>
     }
-    if (loading) {
+
+    if (loading || sending) {
         return <Loading></Loading>
     }
-    const resetPassword = async event => {
-        const email = event.target.email.value;
+
+    const resetPassword = async () => {
+        const email = emailInput.current.value;
         console.log(email);
         if (email) {
             await sendPasswordResetEmail(email);
@@ -42,14 +45,13 @@ const Login = () => {
         else {
             toast('Please enter your email address!')
         }
-        
     }
     const handelLogin = event => {
         event.preventDefault();
         const email = event.target.email.value;
         const password = event.target.password.value;
         signInWithEmailAndPassword(email, password);
-        console.log(email, password);
+
     }
 
     return (
@@ -59,7 +61,7 @@ const Login = () => {
                     <h1 className='text-center'>Please Login</h1>
                     <Form onSubmit={handelLogin} >
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Control type="email" name="email" placeholder="Enter email" />
+                            <Form.Control ref={emailInput} type="email" name="email" placeholder="Enter email" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Control type="password" name="password" placeholder="Password" />
@@ -70,7 +72,7 @@ const Login = () => {
                         <p>Password Reset<span className='text-primary'><button className='text-decoration-none btn btn-link' onClick={resetPassword}>Reset</button></span></p>
                     </Form>
                     <SocilLogin></SocilLogin>
-                    <ToastContainer/>
+                    <ToastContainer />
                 </section>
             </div>
         </div>

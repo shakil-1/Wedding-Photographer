@@ -33,7 +33,7 @@ const ServiceDetails = () => {
                        
                     </div>
                     <Link to={'/shipping/' + id}>
-                        <button className='btn btn-primary mx-auto d-block'>Shipping Address</button>
+                        <button className='btn btn-primary mx-auto d-block  w-100'>Shipping Address</button>
                     </Link>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import About from './Page/About/About';
 import Blog from './Page/Blog/Blog';
 import Footer from './Page/Footer/Footer';
+import Gallery from './Page/Gallery/Gallery';
 import Header from './Page/Header/Header';
 import Home from './Page/Home/Home/Home';
 import Login from './Page/Home/Login/Login';
@@ -32,7 +33,16 @@ function App() {
             <Blog></Blog>
           </RequireAuth>
         }></Route>
-        <Route path='/about' element={<About></About>}></Route>
+        <Route path='/gallery' element={
+          <RequireAuth>
+            <Gallery></Gallery>
+          </RequireAuth>
+        }></Route>
+        <Route path='/about' element={
+          <RequireAuth>
+            <About></About>
+          </RequireAuth>
+        }></Route>
         <Route path='/shipping/:id' element={<Shipping></Shipping>}></Route>
         <Route path='/loading' element={<Loading></Loading>}></Route>
         <Route path='/service' element={<Service></Service>}></Route>
