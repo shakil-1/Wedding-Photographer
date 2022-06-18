@@ -1,35 +1,27 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../Firebase.init';
 import Loading from '../../Loading/Loading';
 import SocilLogin from '../../SocilLogin/SocilLogin';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
-    const navigate = useNavigate();
     const [
         createUserWithEmailAndPassword,
         user,
         loading,
-        error,
-    ] = useCreateUserWithEmailAndPassword(auth);
-    const [sendEmailVerification, sending, error1] = useSendEmailVerification(auth);
-    if (user) {
-        console.log(user);
-    }
+        error
 
-    if (error) {
-        return (
-            <div>
-                <p>Error: {error.message}</p>
-            </div>
-        );
-    }
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+    const navigate = useNavigate();
+
+
     if (loading) {
         return <Loading></Loading>
+    }
+    if (user) {
+        console.log('user', user);
     }
 
     const handelSubmitRegister = async (event) => {
@@ -38,11 +30,9 @@ const Register = () => {
         const email = event.target.email.value;
         const password = event.target.password.value;
 
-
+        console.log(name, email, password);
 
         await createUserWithEmailAndPassword(email, password);
-        await sendEmailVerification();
-        toast('Send password reset, please check your email')
         navigate('/home');
 
 
@@ -69,7 +59,7 @@ const Register = () => {
                         </Link>
                     </Form>
                     <SocilLogin></SocilLogin>
-                    <ToastContainer />
+
 
                 </section>
             </div>

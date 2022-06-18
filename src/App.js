@@ -21,8 +21,16 @@ function App() {
     <div>
       <Header></Header>
       <Routes>
-        <Route path='/' element={<Home></Home>}></Route>
-        <Route path='/home' element={<Home></Home>}></Route>
+        <Route path='/' element={
+          <RequireAuth>
+            <Home></Home>
+          </RequireAuth>
+        }></Route>
+        <Route path='/home' element={
+          <RequireAuth>
+            <Home></Home>
+          </RequireAuth>
+        }></Route>
         <Route path='/home/:id' element={
           <RequireAuth>
             <ServiceDetails></ServiceDetails>
@@ -45,7 +53,11 @@ function App() {
         }></Route>
         <Route path='/shipping/:id' element={<Shipping></Shipping>}></Route>
         <Route path='/loading' element={<Loading></Loading>}></Route>
-        <Route path='/service' element={<Service></Service>}></Route>
+        <Route path='/service' element={
+          <RequireAuth>
+            <Service></Service>
+          </RequireAuth>
+        }></Route>
         <Route path='/services' element={<Services></Services>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
